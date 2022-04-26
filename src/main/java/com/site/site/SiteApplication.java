@@ -1,20 +1,26 @@
 package com.site.site;
 
+import com.site.site.interceptor.Interceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
-@MapperScan(basePackages = "com.site.site.dao")
-public class SiteApplication {
+public class SiteApplication extends WebMvcConfigurationSupport {
 
     public static void main(String[] args) {
-        int low = 3;
-        int height = 8;
-        int mid = (low + height) /2;
-        System.out.print(mid);
-        System.out.print(000000000000);
         SpringApplication.run(SiteApplication.class, args);
     }
 
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        List<String> strings = new ArrayList<String>();
+        registry.addInterceptor(new Interceptor()).addPathPatterns("/**").excludePathPatterns(strings);
+        super.addInterceptors(registry);
+    }
 }
